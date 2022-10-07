@@ -121,19 +121,14 @@ class Domain:
         self.exp += 1260
       
     return match_found
+def lowercase(s):
+  return s.lower()
+  
 
 st.title('Genshin Artifact Simulator')
 user_domain = st.sidebar.selectbox(label = 'Select a domain:', options =  domain_dict.keys())
-user_sets = []
-st.sidebar.write('Select sets:')
-for user_set in domain_dict[user_domain]:
-    if st.sidebar.checkbox(user_set, value = True):
-        user_sets.append(user_set)
-st.sidebar.write('Select pieces:')
-user_pieces = []
-for user_piece in ['Flower', 'Plume', 'Sands', 'Goblet', 'Circlet']:
-    if st.sidebar.checkbox(user_piece, value = True):
-        user_pieces.append(user_piece.lower())
+user_sets = st.sidebar.multiselect('Select sets:', domain_dict[user_domain])
+user_pieces = st.sidebar.multiselect('Select pieces:', ['Flower', 'Plume', 'Sands', 'Goblet', 'Circlet'], format_func = lowercase)
         
 
 iterations = 100
