@@ -140,7 +140,7 @@ iterations = 100
 attempts = 0
 if st.sidebar.button('Run simulation!'):
     for i in range(iterations):
-        d = Domain(domain_dict['user_domain'])
+        d = Domain(domain_dict[user_domain])
         d.create_match(asets = user_sets, pieces = user_pieces)
         run_count = 0
         while run_count < 1000:
