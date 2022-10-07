@@ -128,8 +128,8 @@ def lowercase(s):
 st.title('Genshin Artifact Simulator')
 user_domain = st.sidebar.selectbox(label = 'Select a domain:', options =  domain_dict.keys())
 user_sets = st.sidebar.multiselect('Select sets:', domain_dict[user_domain])
-user_pieces = st.sidebar.multiselect('Select pieces:', ['Flower', 'Plume', 'Sands', 'Goblet', 'Circlet'], format_func = lowercase)
-        
+user_pieces = st.sidebar.multiselect('Select pieces:', ['flower', 'plume', 'sands', 'goblet', 'circlet'])
+
 
 iterations = 100
 attempts = 0
