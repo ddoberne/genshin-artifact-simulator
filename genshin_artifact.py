@@ -166,8 +166,10 @@ if st.sidebar.button('Run simulation!'):
             run_count += 1
             if d.run():
                 break
+            if condensed and d.run():
+                break
         attempts += run_count
-st.write(f'Average number of runs: {(attempts/iterations)/(1 + condensed)}')
+st.write(f'Average number of runs: {attempts/iterations}')
         
 
 
