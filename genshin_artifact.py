@@ -135,11 +135,14 @@ user_sets = st.sidebar.multiselect('Select sets:', domain_dict[user_domain])
 user_pieces = st.sidebar.multiselect('Select pieces:', ['Flower', 'Plume', 'Sands', 'Goblet', 'Circlet'])
 soi = set()
 if 'Sands' in user_pieces:
-  soi.add(sands_stats)
+  for stat in sands_stats:
+    soi.add(stat)
 if 'Goblet' in user_pieces:
-  soi.add(goblet_stats)
+  for stat in goblet_stats:
+    soi.add(stat)
 if 'Circlet' in user_pieces:
-  soi.add(circlet_stats)
+  for stat in circlet_stats:
+    soi.add(stat)
 if len(soi) > 0:
   user_mstats = st.sidebar.multiselect('Select main stats:', soi)
 else:
