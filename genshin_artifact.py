@@ -130,6 +130,7 @@ def lowercase(s):
   
 
 st.title('Genshin Artifact Simulator')
+condensed = st.sidebar.checkbox(label = 'Use Condensed Resin', value = False)
 user_domain = st.sidebar.selectbox(label = 'Select a domain:', options =  domain_dict.keys())
 user_sets = st.sidebar.multiselect('Select sets:', domain_dict[user_domain])
 user_pieces = st.sidebar.multiselect('Select pieces:', ['Flower', 'Plume', 'Sands', 'Goblet', 'Circlet'])
@@ -166,7 +167,7 @@ if st.sidebar.button('Run simulation!'):
             if d.run():
                 break
         attempts += run_count
-st.write(f'Average number of runs: {attempts/iterations}')
+st.write(f'Average number of runs: {(attempts/iterations)/(1 + condensed)}')
         
 
 
