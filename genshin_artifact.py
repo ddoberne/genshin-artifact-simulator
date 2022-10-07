@@ -123,8 +123,7 @@ class Domain:
     return match_found
 
 st.title('Genshin Artifact Simulator')
-st.sidebar.write('Select a domain:')
-user_domain = st.sidebar.selectbox(domain_dict.keys())
+user_domain = st.sidebar.selectbox(label = 'Select a domain:', options =  domain_dict.keys())
 user_sets = []
 st.sidebar.write('Select sets:')
 for user_set in domain_dict[user_domain]:
