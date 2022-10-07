@@ -14,12 +14,16 @@ domain_dict = {'Clear Pool and Mountain Cavern': ['Noblesse Oblige', 'Bloodstain
                'The Lost Valley': ['Echoes of an Offering', 'Vermillion Hereafter', 'Gambler', 'Martial Artist'],
                'Valley of Remembrance': ['Maiden Beloved', 'Viridescent Venerer', 'Traveling Doctor', 'Tiny Miracle']}
 
+sands_stats = ['hp%', 'atk%', 'def%', 'er%', 'em']
+goblet_stats = ['hp%', 'atk%', 'def%', 'pyro%', 'electro%', 'cryo%', 'hydro%', 'dendro%', 'anemo%', 'geo%', 'physical%', 'em']
+circlet_stats = ['hp%', 'atk%', 'def%', 'cr%', 'cd%', 'healing%', 'em']
+
 piece_dict = {1:'Flower', 2:'Plume', 3:'Sands', 4:'Goblet', 5:'Circlet'}
 mstat_dict = {'Flower':[['hp'],[100]],
               'Plume':[['atk'],[100]],
-              'Sands':[['hp%', 'atk%', 'def%', 'er%', 'em'],[26.68, 26.66, 26.66, 10, 10]],
-              'Goblet':[['hp%', 'atk%', 'def%', 'pyro%', 'electro%', 'cryo%', 'hydro%', 'dendro%', 'anemo%', 'geo%', 'physical%', 'em'],[19.175, 19.175, 19.150, 5, 5, 5, 5, 5, 5, 5, 5, 2.5]],
-              'Circlet':[['hp%', 'atk%', 'def%', 'cr%', 'cd%', 'healing%', 'em'],[22, 22, 22, 10, 10, 10, 4]]}
+              'Sands':[sands_stats,[26.68, 26.66, 26.66, 10, 10]],
+              'Goblet':[goblet_stats,[19.175, 19.175, 19.150, 5, 5, 5, 5, 5, 5, 5, 5, 2.5]],
+              'Circlet':[circlet_stats,[22, 22, 22, 10, 10, 10, 4]]}
 flatrates = [15.79, 15.79, 10.53, 10.53, 10.53, 10.53, 10.53, 7.89, 7.89]
 pctrates = [15, 15, 15, 10, 10, 10, 10, 7.5, 7.5]
 elementalrates = [13.64, 13.64, 13.64, 9.09, 9.09, 9.09, 9.09, 9.09, 6.82, 6.82]
@@ -63,7 +67,7 @@ class Domain:
     self.exp = 0
     self.match = False
   
-  def create_match(self,  stars = False, asets = False, pieces = False, mstats = False, sstats = False):
+  def create_match(self,  stars = [], asets = [], pieces = [], mstats = [], sstats = []):
     self.match = {'stars': stars,
                   'asets': asets,
                   'pieces': pieces,
@@ -73,15 +77,15 @@ class Domain:
   def check_match(self, a, verbose = False):
     if verbose:
       print((a.stars, a.aset, a.piece, a.mstat, a.sstat))
-    if self.match['stars'] and a.stars not in self.match['stars']:
+    if len(self.match['stars']) > 0 and a.stars not in self.match['stars']:
       return False
-    if self.match['asets'] and a.aset not in self.match['asets']:
+    if len(self.match['asets']) > 0 and a.aset not in self.match['asets']:
       return False
-    if self.match['pieces'] and a.piece not in self.match['pieces']:
+    if len(self.match['pieces']) > 0 and a.piece not in self.match['pieces']:
       return False
-    if self.match['mstats'] and a.mstat not in self.match['mstats']:
+    if len(self.match['mstats']) > 0 and a.mstat not in self.match['mstats']:
       return False
-    if self.match['sstats']:
+    if len(self.match['sstats']) > 0:
       checklist = self.match['sstats'].copy()
       for stat in a.sstat:
         if stat in checklist:
@@ -129,6 +133,22 @@ st.title('Genshin Artifact Simulator')
 user_domain = st.sidebar.selectbox(label = 'Select a domain:', options =  domain_dict.keys())
 user_sets = st.sidebar.multiselect('Select sets:', domain_dict[user_domain])
 user_pieces = st.sidebar.multiselect('Select pieces:', ['Flower', 'Plume', 'Sands', 'Goblet', 'Circlet'])
+soi = set()
+if 'Sands' in user_pieces:
+  soi.add(sands_stats)
+if 'Goblet' in user_pieces:
+  soi.add(goblet_stats)
+if 'Circlet' in user_pieces:
+  soi.add(circlet_stats)
+if len(soi) > 0:
+  user_mstats = st.sidebar.multiselect('Select main stats:', soi)
+else:
+  user_mstats = []
+if 'Flower' in user_pieces:
+  user_mstats.append('hp')
+if 'Plume' in user_pieces:
+  user_mstats.append('atk')       
+user_sstats = st.sidebar.multiselect('Select substats:', substats)
 
 
 iterations = 100
@@ -136,7 +156,7 @@ attempts = 0
 if st.sidebar.button('Run simulation!'):
     for i in range(iterations):
         d = Domain(domain_dict[user_domain])
-        d.create_match(asets = user_sets, pieces = user_pieces)
+        d.create_match(asets = user_sets, pieces = user_pieces, mstats = user_mstats, sstats = user_sstats)
         run_count = 0
         while run_count < 1000:
             run_count += 1
