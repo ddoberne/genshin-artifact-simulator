@@ -14,12 +14,12 @@ domain_dict = {'Clear Pool and Mountain Cavern': ['Noblesse Oblige', 'Bloodstain
                'The Lost Valley': ['Echoes of an Offering', 'Vermillion Hereafter', 'Gambler', 'Martial Artist'],
                'Valley of Remembrance': ['Maiden Beloved', 'Viridescent Venerer', 'Traveling Doctor', 'Tiny Miracle']}
 
-piece_dict = {1:'flower', 2:'plume', 3:'sands', 4:'goblet', 5:'circlet'}
-mstat_dict = {'flower':[['hp'],[100]],
-              'plume':[['atk'],[100]],
-              'sands':[['hp%', 'atk%', 'def%', 'er%', 'em'],[26.68, 26.66, 26.66, 10, 10]],
-              'goblet':[['hp%', 'atk%', 'def%', 'pyro%', 'electro%', 'cryo%', 'hydro%', 'dendro%', 'anemo%', 'geo%', 'physical%', 'em'],[19.175, 19.175, 19.150, 5, 5, 5, 5, 5, 5, 5, 5, 2.5]],
-              'circlet':[['hp%', 'atk%', 'def%', 'cr%', 'cd%', 'healing%', 'em'],[22, 22, 22, 10, 10, 10, 4]]}
+piece_dict = {1:'Flower', 2:'Plume', 3:'Sands', 4:'Goblet', 5:'Circlet'}
+mstat_dict = {'Flower':[['hp'],[100]],
+              'Plume':[['atk'],[100]],
+              'Sands':[['hp%', 'atk%', 'def%', 'er%', 'em'],[26.68, 26.66, 26.66, 10, 10]],
+              'Goblet':[['hp%', 'atk%', 'def%', 'pyro%', 'electro%', 'cryo%', 'hydro%', 'dendro%', 'anemo%', 'geo%', 'physical%', 'em'],[19.175, 19.175, 19.150, 5, 5, 5, 5, 5, 5, 5, 5, 2.5]],
+              'Circlet':[['hp%', 'atk%', 'def%', 'cr%', 'cd%', 'healing%', 'em'],[22, 22, 22, 10, 10, 10, 4]]}
 flatrates = [15.79, 15.79, 10.53, 10.53, 10.53, 10.53, 10.53, 7.89, 7.89]
 pctrates = [15, 15, 15, 10, 10, 10, 10, 7.5, 7.5]
 elementalrates = [13.64, 13.64, 13.64, 9.09, 9.09, 9.09, 9.09, 9.09, 6.82, 6.82]
@@ -128,7 +128,7 @@ def lowercase(s):
 st.title('Genshin Artifact Simulator')
 user_domain = st.sidebar.selectbox(label = 'Select a domain:', options =  domain_dict.keys())
 user_sets = st.sidebar.multiselect('Select sets:', domain_dict[user_domain])
-user_pieces = st.sidebar.multiselect('Select pieces:', ['flower', 'plume', 'sands', 'goblet', 'circlet'])
+user_pieces = st.sidebar.multiselect('Select pieces:', ['Flower', 'Plume', 'Sands', 'Goblet', 'Circlet'])
 
 
 iterations = 100
