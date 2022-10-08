@@ -61,7 +61,7 @@ class Artifact:
         self.sstat.append(roll)
         
   def __str__(self):
-    return f'{self.stars}★ {self.aset} {self.piece} with mainstat {self.mstat} and substats {self.sstat}'
+    return f'{self.stars}★ {self.aset} {self.piece}\n{self.mstat}/{self.sstat}'
   
   def pass_filter(self, f):
     if len(f.asets) > 0 and self.aset not in f.asets:
@@ -290,8 +290,11 @@ if st.sidebar.button('Run simulation!') and len(st.session_state.filters) > 0:
     for f in st.session_state.filters:
       d.add_filter(f)
     d.run(n = user_runs)
+    st.write('Artifacts of note:')
+    textbox = ''
     for a in d.get_filtered_artifacts():
-      st.text(a)
+      textbox += a.__str__() + '\n'
+    st.text(textbox[:-1]
     
   
   
