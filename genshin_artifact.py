@@ -104,7 +104,7 @@ class Filter:
       if len(self.sstats) > 1:
         for i in self.sstats[1:]:
           s5 += ' AND ' + i
-    return f'{s1}⭐ {s2} {s3} with mainstat {s4} and substat(s) {s5}'
+    return f'{s1}★ {s2} {s3} with mainstat {s4} and substat(s) {s5}'
 
 class Domain:
   def __init__(self, sets):
@@ -249,7 +249,7 @@ else:
   output = ''
   for f in st.session_state.filters:
     output += f.__str__() + '\n'
-  st.code(output[:-2])
+  st.code(output[:-1], language = None)
   
 iterations = 100
 attempts = []
