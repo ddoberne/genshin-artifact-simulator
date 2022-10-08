@@ -176,10 +176,11 @@ if st.sidebar.button('Run simulation!'):
     
     fig = plt.figure(figsize = (12,6))
     
-    sns.set_theme('notebook')
-    sns.lineplot(attempts)
-    plt.title('Simulation distribution')
-    plt.ylabel('Number of runs')
-    plt.xlabel('Simultation instance (sorted)')
-    st.pyplot(fig)
-
+  sns.set_theme('notebook')
+  plt.plot(attempts)
+  plt.title('Simulation distribution')
+  plt.ylabel('Number of runs')
+  plt.xlabel('Simultation instance (sorted)')
+  plt.xlim(0, iterations)
+  plt.ylim(0, max(attempts))
+  plt.fill_between(range(iterations), attempts)
