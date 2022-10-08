@@ -283,7 +283,7 @@ else:
   
 iterations = 100
 attempts = []
-if st.sidebar.button('Run simulation!') and len(filters) > 0:
+if st.sidebar.button('Run simulation!') and len(st.session_state.filters) > 0:
   if mode == 'Run n times':
     d = Domain(domain_dict[user_domain])
     for f in st.session_state.filters:
