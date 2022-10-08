@@ -246,8 +246,11 @@ else:
     st.write(f'Simulating domain runs until {mode[-3:]} of the following artifacts are found:')
   elif mode == 'Run n times':
     st.write(f'Simulating {user_runs} domain run(s) and showing artifacts that fit the following description:') 
+  output = ''
   for f in st.session_state.filters:
-    st.write(f.__str__())
+    output += f.__str__() + '\n'
+  st.code(output[:-2])
+  
 iterations = 100
 attempts = []
 if st.sidebar.button('Run simulation!') and len(filters) > 0:
