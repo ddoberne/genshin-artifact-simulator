@@ -183,8 +183,9 @@ class Domain:
     return match_found
 def lowercase(s):
   return s.lower()
-  
-filters = []
+
+if 'filters' not in st.session_state:
+  st.session_state.filters = []
 st.title('Genshin Artifact Simulator')
 condensed = st.sidebar.checkbox(label = 'Use Condensed Resin', value = False)
 #verbose = st.sidebar.checkbox(label = 'Print results', value = False)
@@ -229,19 +230,19 @@ user_sstats = st.sidebar.multiselect('Select substats:', substats)
 
 if st.sidebar.button('Add filter'):
   f = Filter(asets = user_sets, stars = user_stars, pieces = user_pieces, mstats = user_mstats, sstats = user_sstats)
-  filters.append(f)
+  st.session_state.filters.append(f)
  
-if len(filters) > 0 and st.sidebar.button('Remove most recent filter'):
-  filters.pop()
+if len(st.session_state.filters) > 0 and st.sidebar.button('Remove most recent filter'):
+  st.session_state.filters.pop()
 
   
 
-if len(filters) == 0:
+if len(st.session_state.filters) == 0:
   st.write('Use the sidebar to set simulation parameters!')
 else:
   if mode in ['Find ONE', 'Find ALL']:
     st.write(f'Simulating domain runs until {mode[-3:]} of the following artifacts are found:')
-    for f in filters:
+    for f in st.session_state.filters:
       st.write(f)
 iterations = 100
 attempts = []
