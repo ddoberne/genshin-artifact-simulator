@@ -152,7 +152,7 @@ if len(user_sets) > 0:
     user_stars.append(4)
     if threes:
       user_stars.append(3)
-  user_stars = st.sidebar.multiselect('Select stars:', star_list) 
+  user_stars = st.sidebar.multiselect('Select stars:', user_stars) 
 user_pieces = st.sidebar.multiselect('Select pieces:', ['Flower', 'Plume', 'Sands', 'Goblet', 'Circlet'])
 soi = set()
 if 'Sands' in user_pieces:
