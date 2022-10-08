@@ -294,7 +294,7 @@ if st.sidebar.button('Run simulation!') and len(st.session_state.filters) > 0:
     textbox = ''
     for a in d.get_filtered_artifacts():
       textbox += a.__str__() + '\n'
-    st.text(textbox[:-1]
+    st.text(textbox[:-1])
     
   
   
