@@ -172,5 +172,9 @@ if st.sidebar.button('Run simulation!'):
 attempts.sort()
 st.write(f'Average number of runs: {sum(attempts)/iterations}')
         
-
+import matplotlib.pyplot as plt
+plt.plot(attempts)
+plt.title('Simulation distribution')
+plt.ylabel('Number of runs')
+plt.xlabel('Simultation instance (sorted)')
 
