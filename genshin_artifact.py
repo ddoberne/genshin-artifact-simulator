@@ -86,9 +86,9 @@ class Filter:
     if len(self.pieces) == 0:
       s3 = 'piece'
     else:
-      s3 = self.piece[0]
-      if len(self.piece) > 1:
-        for i in self.piece[1:]:
+      s3 = self.pieces[0]
+      if len(self.pieces) > 1:
+        for i in self.pieces[1:]:
           s3 += '/' + i
     if len(self.mstats) == 0:
       s4 = 'ANY'
