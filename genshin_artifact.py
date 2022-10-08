@@ -59,6 +59,24 @@ class Artifact:
       roll = random.choices(population = sstat_dict[self.mstat][0], weights = sstat_dict[self.mstat][1], k = 1)[0]
       if roll not in self.sstat:
         self.sstat.append(roll)
+        
+  def __str__(self):
+    return f'{self.stars}★ {self.aset} {self.piece} with mainstat {self.mstat} and substats {self.sstat}'
+  
+  def pass_filter(self, f):
+    if len(f.asets) > 0 and self.aset not in f.asets:
+      return False
+    if len(f.stars) > 0 and self.stars not in f.stars:
+      return False
+    if len(f.pieces) > 0 and self.piece not in f.pieces:
+      return False
+    if len(f.mstats) > 0 and self.mstat not in f.mstats:
+      return False
+    if len(f.sstats) > 0:
+      for stat in f.sstats:
+        if stat not in self.sstat:
+          return False
+    return True
 
 class Filter:
   def __init__(self, stars = [], asets = [], pieces = [], mstats = [], sstats = []):
@@ -113,13 +131,23 @@ class Domain:
                    4:[],
                    5:[]}
     self.exp = 0
-    self.match = []
+    self.filters = []
+    
+  def get_filtered_artifacts(self):
+    artifact_list = []
+    for f in self.filters:
+      for n in [5,4,3]:
+        for a in self.output[n]:
+          if a.pass_filter(f) and a not in artifact_list:
+            artifact_list.append(a)
+    return artifact_list
+        
   
   def add_filter(self, f):
-    self.match.append(f)
+    self.filters.append(f)
     
   def remove_filter(self):
-    self.match.pop()
+    self.filters.pop()
   
   def create_match(self,  stars = [], asets = [], pieces = [], mstats = [], sstats = []):
     self.match = {'stars': stars,
@@ -129,6 +157,7 @@ class Domain:
                   'sstats': sstats}
   
   def check_match(self, a, verbose = False):
+    for f in self.filters
     if len(self.match['stars']) > 0 and a.stars not in self.match['stars']:
       return False
     if len(self.match['asets']) > 0 and a.aset not in self.match['asets']:
@@ -254,6 +283,18 @@ else:
 iterations = 100
 attempts = []
 if st.sidebar.button('Run simulation!') and len(filters) > 0:
+  if mode == 'Run n times':
+    d = Domain(domain_dict[user_domain])
+    for f in st.session_state.filters:
+      d.add_filter(f)
+    d.run(n = user_runs)
+    for a in d.get_filtered_artifacts():
+      st.text(a)
+    
+  
+  
+  else:
+    
     for i in range(iterations):
         d = Domain(domain_dict[user_domain])
         for f in filters:
