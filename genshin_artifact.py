@@ -93,9 +93,9 @@ class Domain:
       if len(checklist) > 0:
         return False
     if verbose:
-      print(f'{a.stars}* {a.aset} {a.piece}')
-      print(f'Main stat: {a.mstat}')
-      print(f'Substats: {a.sstat}')
+      st.write(f'{a.stars}* {a.aset} {a.piece}')
+      st.write(f'Main stat: {a.mstat}')
+      st.write(f'Substats: {a.sstat}')
     return True
 
       
