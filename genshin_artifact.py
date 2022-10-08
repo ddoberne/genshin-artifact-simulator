@@ -61,7 +61,10 @@ class Artifact:
         self.sstat.append(roll)
         
   def __str__(self):
-    return f'{self.stars}★ {self.aset} {self.piece}\n{self.mstat}/{self.sstat}'
+    output = f'{self.stars}★ {self.aset} {self.mstat} {self.piece}'
+    for stat in self.sstat:
+      output += '\n' + stat
+    return output
   
   def pass_filter(self, f):
     if len(f.asets) > 0 and self.aset not in f.asets:
