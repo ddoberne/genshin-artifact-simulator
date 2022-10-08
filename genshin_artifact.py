@@ -156,7 +156,7 @@ user_sstats = st.sidebar.multiselect('Select substats:', substats)
 
 
 iterations = 100
-attempts = 0
+attempts = []
 if st.sidebar.button('Run simulation!'):
     for i in range(iterations):
         d = Domain(domain_dict[user_domain])
@@ -168,8 +168,9 @@ if st.sidebar.button('Run simulation!'):
                 break
             if condensed and d.run():
                 break
-        attempts += run_count
-st.write(f'Average number of runs: {attempts/iterations}')
+        attempts.append(run_count)
+attempts.sort()
+st.write(f'Average number of runs: {sum(attempts)/iterations}')
         
 
 
