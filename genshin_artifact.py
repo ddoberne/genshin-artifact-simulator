@@ -139,6 +139,20 @@ condensed = st.sidebar.checkbox(label = 'Use Condensed Resin', value = False)
 verbose = False
 user_domain = st.sidebar.selectbox(label = 'Select a domain:', options =  domain_dict.keys())
 user_sets = st.sidebar.multiselect('Select sets:', domain_dict[user_domain])
+user_stars = []
+if len(user_sets) > 0:
+  fives, threes = False, False
+  for uset in user_sets:
+    if uset in domain_dict[user_domain][:2]:
+      fives = True
+    if uset in domain_dict[user_domain][2:]:
+      threes = True
+    if fives:
+      user_stars.append(5)
+    user_stars.append(4)
+    if threes:
+      user_stars.append(3)
+  user_stars = st.sidebar.multiselect('Select stars:', star_list) 
 user_pieces = st.sidebar.multiselect('Select pieces:', ['Flower', 'Plume', 'Sands', 'Goblet', 'Circlet'])
 soi = set()
 if 'Sands' in user_pieces:
@@ -166,7 +180,7 @@ attempts = []
 if st.sidebar.button('Run simulation!'):
     for i in range(iterations):
         d = Domain(domain_dict[user_domain])
-        d.create_match(asets = user_sets, pieces = user_pieces, mstats = user_mstats, sstats = user_sstats)
+        d.create_match(asets = user_sets, stars = user_stars, pieces = user_pieces, mstats = user_mstats, sstats = user_sstats)
         run_count = 0
         while run_count < 1000:
             run_count += 1
