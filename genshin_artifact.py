@@ -63,7 +63,7 @@ class Artifact:
   def __str__(self):
     output = f'{self.stars}★ {self.aset} {self.mstat} {self.piece}'
     for stat in self.sstat:
-      output += '\n' + stat
+      output += '\n  -' + stat
     return output
   
   def pass_filter(self, f):
