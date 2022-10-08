@@ -104,7 +104,7 @@ class Filter:
       if len(self.sstats) > 1:
         for i in self.sstats[1:]:
           s5 += ' AND ' + i
-    return f'{s1}⭐ {s2} {s3} with mainstat {s4} and substat(s) {s5}'
+    return f'{s1} {s2} {s3} with mainstat {s4} and substat(s) {s5}'
 
 class Domain:
   def __init__(self, sets):
@@ -245,7 +245,7 @@ else:
   if mode in ['Find ONE', 'Find ALL']:
     st.write(f'Simulating domain runs until {mode[-3:]} of the following artifacts are found:')
   elif mode == 'Run n times':
-    st.write(f'Simulating {user_runs} domain runs and showing artifacts that fit the following description:') 
+    st.write(f'Simulating {user_runs} domain run(s) and showing artifacts that fit the following description:') 
   for f in st.session_state.filters:
     st.write(f)
 iterations = 100
