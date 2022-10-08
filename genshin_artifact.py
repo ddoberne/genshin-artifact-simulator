@@ -329,7 +329,7 @@ if st.sidebar.button('Run simulation!') and len(st.session_state.filters) > 0:
     
     for i in range(iterations):
         d = Domain(domain_dict[user_domain])
-        for f in filters:
+        for f in st.session_state.filters:
           d.add_filter(f)
         run_count = 0
         while run_count < 1000:
