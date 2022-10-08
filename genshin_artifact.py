@@ -249,7 +249,7 @@ else:
   output = ''
   for f in st.session_state.filters:
     output += f.__str__() + '\n'
-  st.code(output[:-1], language = None)
+  st.text(output[:-1])
   
 iterations = 100
 attempts = []
