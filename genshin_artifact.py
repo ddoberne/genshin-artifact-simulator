@@ -1,6 +1,7 @@
 
 import random
 import streamlit as st
+import matplotlib.pyplot as plt
 
 domain_dict = {'Clear Pool and Mountain Cavern': ['Noblesse Oblige', 'Bloodstained Chivalry', 'Scholar', 'Gambler'],
                'Domain of Guyun': ['Retracing Bolide', 'Archaic Petra', 'Brave Heart', 'Lucky Dog'],
@@ -169,12 +170,13 @@ if st.sidebar.button('Run simulation!'):
             if condensed and d.run():
                 break
         attempts.append(run_count)
-attempts.sort()
-st.write(f'Average number of runs: {sum(attempts)/iterations}')
-        
-import matplotlib.pyplot as plt
-plt.plot(attempts)
-plt.title('Simulation distribution')
-plt.ylabel('Number of runs')
-plt.xlabel('Simultation instance (sorted)')
+    attempts.sort()
+    st.write(f'Average number of runs: {sum(attempts)/iterations}')
+    
+    fig = plt.figure(figsize = (12,6))
+    plt.plot(attempts)
+    plt.title('Simulation distribution')
+    plt.ylabel('Number of runs')
+    plt.xlabel('Simultation instance (sorted)')
+    st.pyplot(fig)
 
