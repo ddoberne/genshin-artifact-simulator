@@ -62,9 +62,10 @@ class Artifact:
         
   def __str__(self):
     output = f'{self.stars}★ {self.aset} {self.mstat} {self.piece}'
+    output += '\n  -'
     for stat in self.sstat:
-      output += '\n  -' + stat
-    return output
+      output += stat + ', '
+    return output[:-2]
   
   def pass_filter(self, f):
     if len(f.asets) > 0 and self.aset not in f.asets:
