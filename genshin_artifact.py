@@ -191,7 +191,6 @@ condensed = st.sidebar.checkbox(label = 'Use Condensed Resin', value = False)
 #verbose = st.sidebar.checkbox(label = 'Print results', value = False)
 verbose = False
 user_domain = st.sidebar.selectbox(label = 'Select a domain:', options =  domain_dict.keys())
-mode = st.sidebar.radio('Mode:', ['Find ONE', 'Find ALL', 'Run n times'])
 user_sets = st.sidebar.multiselect('Select sets:', domain_dict[user_domain])
 user_stars = []
 if len(user_sets) > 0:
@@ -223,9 +222,9 @@ if len(soi) > 0:
 else:
   user_mstats = []
 if 'Flower' in user_pieces:
-  user_mstats.append('hp')
+  user_mstats.append('HP')
 if 'Plume' in user_pieces:
-  user_mstats.append('atk')       
+  user_mstats.append('ATK')       
 user_sstats = st.sidebar.multiselect('Select substats:', substats)
 
 if st.sidebar.button('Add filter'):
@@ -235,6 +234,9 @@ if st.sidebar.button('Add filter'):
 if len(st.session_state.filters) > 0 and st.sidebar.button('Remove most recent filter'):
   st.session_state.filters.pop()
 
+mode = st.sidebar.radio('Mode:', ['Find ONE', 'Find ALL', 'Run n times'])
+if mode == 'Run n times':
+  user_runs = st.sidebar.slider('Run n times', min_value = 1, max_value = 100, label_visibility = 'collapsed')
   
 
 if len(st.session_state.filters) == 0:
