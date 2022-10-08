@@ -59,7 +59,53 @@ class Artifact:
       roll = random.choices(population = sstat_dict[self.mstat][0], weights = sstat_dict[self.mstat][1], k = 1)[0]
       if roll not in self.sstat:
         self.sstat.append(roll)
-    
+
+class Filter:
+  def __init__(self, stars = [], asets = [], pieces = [], mstats = [], sstats = []):
+    self.stars = stars
+    self.asets = asets
+    self.pieces = pieces
+    self.mstats = mstats
+    self.sstats = sstats
+  
+  def __str__(self):
+    if len(self.stars) == 0:
+      s1 = 'ANY'
+    else:
+      s1 = str(self.stars[0])
+      if len(self.stars) > 1:
+        for i in self.stars[1:]:
+          s1 += '/' + str(i)
+    if len(self.asets) == 0:
+      s2 = 'ANY'
+    else:
+      s2 = self.asets[0]
+      if len(self.asets) > 1:
+        for i in self.asets[1:]:
+          s2 += '/' + i
+    if len(self.pieces) == 0:
+      s3 = 'piece'
+    else:
+      s3 = self.piece[0]
+      if len(self.piece) > 1:
+        for i in self.piece[1:]:
+          s3 += '/' + i
+    if len(self.mstats) == 0:
+      s4 = 'ANY'
+    else:
+      s4 = self.mstats[0]
+      if len(self.mstats) > 1:
+        for i in self.mstats[1:]:
+          s4 += '/' + i
+    if len(self.sstats) == 0:
+      s5 = 'ANY'
+    else:
+      s5 = self.sstats[0]
+      if len(self.sstats) > 1:
+        for i in self.sstats[1:]:
+          s5 += ' AND ' + i
+    return f'{s1}⭐ {s2} {s3} with main stat {s4} and substat(s) {s5}'
+
 class Domain:
   def __init__(self, sets):
     self.sets = sets
@@ -67,7 +113,13 @@ class Domain:
                    4:[],
                    5:[]}
     self.exp = 0
-    self.match = False
+    self.match = []
+  
+  def add_filter(self, f):
+    self.match.append(f)
+    
+  def remove_filter(self):
+    self.match.pop()
   
   def create_match(self,  stars = [], asets = [], pieces = [], mstats = [], sstats = []):
     self.match = {'stars': stars,
@@ -132,12 +184,20 @@ class Domain:
 def lowercase(s):
   return s.lower()
   
-
+filters = []
 st.title('Genshin Artifact Simulator')
 condensed = st.sidebar.checkbox(label = 'Use Condensed Resin', value = False)
 #verbose = st.sidebar.checkbox(label = 'Print results', value = False)
 verbose = False
 user_domain = st.sidebar.selectbox(label = 'Select a domain:', options =  domain_dict.keys())
+mode = st.sidebar.radio('Mode:', ['Find ONE', 'Find ALL', 'Run n times'])
+if len(filters) == 0:
+  st.write('Use the sidebar to set simulation parameters')
+else:
+  if mode in ['Find ONE', 'Find ALL']:
+    st.write(f'Simulating domain runs until {mode[-3:]} of the following artifacts are found:')
+    for f in filters:
+      st.write(f)
 user_sets = st.sidebar.multiselect('Select sets:', domain_dict[user_domain])
 user_stars = []
 if len(user_sets) > 0:
@@ -175,12 +235,20 @@ if 'Plume' in user_pieces:
 user_sstats = st.sidebar.multiselect('Select substats:', substats)
 
 
+if st.sidebar.button('Add filter'):
+  f = Filter(asets = user_sets, stars = user_stars, pieces = user_pieces, mstats = user_mstats, sstats = user_sstats)
+  filters.append(f)
+ 
+if st.sidebar.button('Remove most recent filter'):
+  filters.pop()
+
 iterations = 100
 attempts = []
-if st.sidebar.button('Run simulation!'):
+if st.sidebar.button('Run simulation!') and len(filters) > 0:
     for i in range(iterations):
         d = Domain(domain_dict[user_domain])
-        d.create_match(asets = user_sets, stars = user_stars, pieces = user_pieces, mstats = user_mstats, sstats = user_sstats)
+        for f in filters:
+          d.add_filter(f)
         run_count = 0
         while run_count < 1000:
             run_count += 1
