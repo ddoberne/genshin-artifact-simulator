@@ -191,13 +191,6 @@ condensed = st.sidebar.checkbox(label = 'Use Condensed Resin', value = False)
 verbose = False
 user_domain = st.sidebar.selectbox(label = 'Select a domain:', options =  domain_dict.keys())
 mode = st.sidebar.radio('Mode:', ['Find ONE', 'Find ALL', 'Run n times'])
-if len(filters) == 0:
-  st.write('Use the sidebar to set simulation parameters')
-else:
-  if mode in ['Find ONE', 'Find ALL']:
-    st.write(f'Simulating domain runs until {mode[-3:]} of the following artifacts are found:')
-    for f in filters:
-      st.write(f)
 user_sets = st.sidebar.multiselect('Select sets:', domain_dict[user_domain])
 user_stars = []
 if len(user_sets) > 0:
@@ -242,6 +235,15 @@ if st.sidebar.button('Add filter'):
 if st.sidebar.button('Remove most recent filter'):
   filters.pop()
 
+  
+
+if len(filters) == 0:
+  st.write('Use the sidebar to set simulation parameters!')
+else:
+  if mode in ['Find ONE', 'Find ALL']:
+    st.write(f'Simulating domain runs until {mode[-3:]} of the following artifacts are found:')
+    for f in filters:
+      st.write(f)
 iterations = 100
 attempts = []
 if st.sidebar.button('Run simulation!') and len(filters) > 0:
