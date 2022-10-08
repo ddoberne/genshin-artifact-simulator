@@ -310,7 +310,7 @@ if st.sidebar.button('Run simulation!') and len(st.session_state.filters) > 0:
       successes.append(len(d.get_filtered_artifacts()))
     successes.sort()
     st.write(f'Mean (average) number of relevant artifacts found: {sum(successes)/iterations}')
-    st.write(f'Median number of relevant artifacts found: {(successes[iterations//2] + successes[(iterations - 1)//2])/2}
+    st.write(f'Median number of relevant artifacts found: {(successes[iterations//2] + successes[(iterations - 1)//2])/2}')
     plt.plot(range(1, iterations + 1), successes)
     plt.title('Simulation distribution')
     plt.ylabel('Number of artifacts')
