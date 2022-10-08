@@ -288,16 +288,39 @@ else:
 iterations = 100
 attempts = []
 if st.sidebar.button('Run simulation!') and len(st.session_state.filters) > 0:
+  fig = plt.figure(figsize = (12,6))
+  sns.set_theme('notebook')
   if mode == 'Run n times':
     d = Domain(domain_dict[user_domain])
     for f in st.session_state.filters:
       d.add_filter(f)
     d.run(n = user_runs)
-    st.write('Artifacts of note:')
+    st.write('Artifacts of note in sample run:')
     textbox = ''
     for a in d.get_filtered_artifacts():
       textbox += a.__str__() + '\n'
     st.text(textbox[:-1])
+    
+    successes = []
+    for i in range(iterations):
+      d = Domain(domain_dict[user_domain])
+      for f in st.session_state.filters:
+        d.add_filter(f)
+      d.run(n = user_runs)
+      successes.append(len(d.get_filtered_artifacts()))
+    successes.sort()
+    st.write(f'Mean (average) number of relevant artifacts found: {sum(successes)/iterations}')
+    st.write(f'Median number of relevant artifacts found: {(successes[iterations//2] + successes[(iterations - 1)//2])/2}
+    plt.plot(range(1, iterations + 1), successes)
+    plt.title('Simulation distribution')
+    plt.ylabel('Number of artifacts')
+    plt.xlabel('Success percentile')
+    plt.xlim(1, iterations)
+    plt.ylim(0, max(successes))
+    plt.fill_between(range(1, iterations + 1), successes)
+    st.pyplot(fig)
+    
+            
     
   
   
@@ -319,9 +342,8 @@ if st.sidebar.button('Run simulation!') and len(st.session_state.filters) > 0:
     st.write(f'Mean (average) number of runs: {sum(attempts)/iterations}')
     st.write(f'Median number of runs: {(attempts[iterations//2] + attempts[(iterations - 1)//2])/2}')
     
-    fig = plt.figure(figsize = (12,6))
     
-    sns.set_theme('notebook')
+    
     plt.plot(range(1, iterations + 1), attempts)
     plt.title('Simulation distribution')
     plt.ylabel('Number of runs')
