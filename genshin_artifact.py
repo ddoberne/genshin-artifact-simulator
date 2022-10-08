@@ -135,7 +135,8 @@ def lowercase(s):
 
 st.title('Genshin Artifact Simulator')
 condensed = st.sidebar.checkbox(label = 'Use Condensed Resin', value = False)
-verbose = st.sidebar.checkbox(label = 'Print results', value = False)
+#verbose = st.sidebar.checkbox(label = 'Print results', value = False)
+verbose = False
 user_domain = st.sidebar.selectbox(label = 'Select a domain:', options =  domain_dict.keys())
 user_sets = st.sidebar.multiselect('Select sets:', domain_dict[user_domain])
 user_pieces = st.sidebar.multiselect('Select pieces:', ['Flower', 'Plume', 'Sands', 'Goblet', 'Circlet'])
