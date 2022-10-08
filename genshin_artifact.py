@@ -307,7 +307,7 @@ if st.sidebar.button('Run simulation!') and len(st.session_state.filters) > 0:
       d = Domain(domain_dict[user_domain])
       for f in st.session_state.filters:
         d.add_filter(f)
-      d.run(n = user_runs * (1 + condensed)
+      d.run(n = user_runs * (1 + condensed))
       successes.append(len(d.get_filtered_artifacts()))
     successes.sort()
     st.write(f'Mean (average) number of relevant artifacts found: {sum(successes)/iterations}')
