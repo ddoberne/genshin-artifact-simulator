@@ -157,7 +157,8 @@ class Domain:
                   'sstats': sstats}
   
   def check_match(self, a, verbose = False):
-    for f in self.filters
+    for f in self.filters:
+      pass
     if len(self.match['stars']) > 0 and a.stars not in self.match['stars']:
       return False
     if len(self.match['asets']) > 0 and a.aset not in self.match['asets']:
