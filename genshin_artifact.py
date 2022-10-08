@@ -191,7 +191,7 @@ if st.sidebar.button('Run simulation!'):
         attempts.append(run_count)
     attempts.sort()
     st.write(f'Mean (average) number of runs: {sum(attempts)/iterations}')
-    st.write(f'Median number of runs: {(attempts[iterations/2] + attempts[(iterations - 1)/2)/2}']
+    st.write(f'Median number of runs: {(attempts[iterations/2] + attempts[(iterations - 1)/2])/2}')
     
     fig = plt.figure(figsize = (12,6))
     
