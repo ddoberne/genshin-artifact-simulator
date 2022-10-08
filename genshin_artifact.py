@@ -104,7 +104,7 @@ class Filter:
       if len(self.sstats) > 1:
         for i in self.sstats[1:]:
           s5 += ' AND ' + i
-    return f'{s1}⭐ {s2} {s3} with main stat {s4} and substat(s) {s5}'
+    return f'{s1}⭐ {s2} {s3} with mainstat {s4} and substat(s) {s5}'
 
 class Domain:
   def __init__(self, sets):
@@ -227,13 +227,13 @@ if 'Plume' in user_pieces:
   user_mstats.append('atk')       
 user_sstats = st.sidebar.multiselect('Select substats:', substats)
 
-
-if st.sidebar.button('Add filter'):
-  f = Filter(asets = user_sets, stars = user_stars, pieces = user_pieces, mstats = user_mstats, sstats = user_sstats)
-  filters.append(f)
+while(True):
+  if st.sidebar.button('Add filter'):
+    f = Filter(asets = user_sets, stars = user_stars, pieces = user_pieces, mstats = user_mstats, sstats = user_sstats)
+    filters.append(f)
  
-if st.sidebar.button('Remove most recent filter'):
-  filters.pop()
+  if st.sidebar.button('Remove most recent filter'):
+    filters.pop()
 
   
 
