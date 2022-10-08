@@ -2,6 +2,7 @@
 import random
 import streamlit as st
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 domain_dict = {'Clear Pool and Mountain Cavern': ['Noblesse Oblige', 'Bloodstained Chivalry', 'Scholar', 'Gambler'],
                'Domain of Guyun': ['Retracing Bolide', 'Archaic Petra', 'Brave Heart', 'Lucky Dog'],
@@ -174,7 +175,9 @@ if st.sidebar.button('Run simulation!'):
     st.write(f'Average number of runs: {sum(attempts)/iterations}')
     
     fig = plt.figure(figsize = (12,6))
-    plt.plot(attempts)
+    
+    sns.set_theme('notebook')
+    sns.lineplot(attempts)
     plt.title('Simulation distribution')
     plt.ylabel('Number of runs')
     plt.xlabel('Simultation instance (sorted)')
