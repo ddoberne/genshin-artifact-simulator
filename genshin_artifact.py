@@ -227,13 +227,12 @@ if 'Plume' in user_pieces:
   user_mstats.append('atk')       
 user_sstats = st.sidebar.multiselect('Select substats:', substats)
 
-while(True):
-  if st.sidebar.button('Add filter'):
-    f = Filter(asets = user_sets, stars = user_stars, pieces = user_pieces, mstats = user_mstats, sstats = user_sstats)
-    filters.append(f)
+if st.sidebar.button('Add filter'):
+  f = Filter(asets = user_sets, stars = user_stars, pieces = user_pieces, mstats = user_mstats, sstats = user_sstats)
+  filters.append(f)
  
-  if st.sidebar.button('Remove most recent filter'):
-    filters.pop()
+if len(filters) > 0 and st.sidebar.button('Remove most recent filter'):
+  filters.pop()
 
   
 
