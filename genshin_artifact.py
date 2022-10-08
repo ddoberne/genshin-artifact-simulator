@@ -77,8 +77,6 @@ class Domain:
                   'sstats': sstats}
   
   def check_match(self, a, verbose = False):
-    if verbose:
-      print((a.stars, a.aset, a.piece, a.mstat, a.sstat))
     if len(self.match['stars']) > 0 and a.stars not in self.match['stars']:
       return False
     if len(self.match['asets']) > 0 and a.aset not in self.match['asets']:
@@ -94,6 +92,10 @@ class Domain:
           checklist.remove(stat)
       if len(checklist) > 0:
         return False
+    if verbose:
+      print(f'{a.stars}* {a.aset} {a.piece}')
+      print(f'Main stat: {a.mstat}')
+      print(f'Substats: {a.sstat}')
     return True
 
       
@@ -133,6 +135,7 @@ def lowercase(s):
 
 st.title('Genshin Artifact Simulator')
 condensed = st.sidebar.checkbox(label = 'Use Condensed Resin', value = False)
+verbose = st.sidebar.checkbox(label = 'Print results', value = False)
 user_domain = st.sidebar.selectbox(label = 'Select a domain:', options =  domain_dict.keys())
 user_sets = st.sidebar.multiselect('Select sets:', domain_dict[user_domain])
 user_pieces = st.sidebar.multiselect('Select pieces:', ['Flower', 'Plume', 'Sands', 'Goblet', 'Circlet'])
@@ -166,9 +169,9 @@ if st.sidebar.button('Run simulation!'):
         run_count = 0
         while run_count < 1000:
             run_count += 1
-            if d.run():
+            if d.run(verbose = verbose):
                 break
-            if condensed and d.run():
+            if condensed and d.run(verbose = verbose):
                 break
         attempts.append(run_count)
     attempts.sort()
