@@ -16,13 +16,13 @@ domain_dict = {'Clear Pool and Mountain Cavern': ['Noblesse Oblige', 'Bloodstain
                'The Lost Valley': ['Echoes of an Offering', 'Vermillion Hereafter', 'Gambler', 'Martial Artist'],
                'Valley of Remembrance': ['Maiden Beloved', 'Viridescent Venerer', 'Traveling Doctor', 'Tiny Miracle']}
 
-sands_stats = ['hp%', 'atk%', 'def%', 'er%', 'em']
-goblet_stats = ['hp%', 'atk%', 'def%', 'pyro%', 'electro%', 'cryo%', 'hydro%', 'dendro%', 'anemo%', 'geo%', 'physical%', 'em']
-circlet_stats = ['hp%', 'atk%', 'def%', 'cr%', 'cd%', 'healing%', 'em']
+sands_stats = ['HP%', 'ATK%', 'DEF%', 'Energy Recharge%', 'Elemental Mastery']
+goblet_stats = ['HP%', 'ATK%', 'DEF%', 'Pyro DMG%', 'Electro DMG%', 'Cryo DMG%', 'Hydro DMG%', 'Dendro DMG%', 'Anemo DMG%', 'Geo DMG%', 'Physical DMG%', 'Elemental Mastery']
+circlet_stats = ['HP%', 'ATK%', 'DEF%', 'CRIT Rate%', 'CRIT DMG%', 'Healing%', 'Elemental Mastery']
 
 piece_dict = {1:'Flower', 2:'Plume', 3:'Sands', 4:'Goblet', 5:'Circlet'}
-mstat_dict = {'Flower':[['hp'],[100]],
-              'Plume':[['atk'],[100]],
+mstat_dict = {'Flower':[['HP'],[100]],
+              'Plume':[['ATK'],[100]],
               'Sands':[sands_stats,[26.68, 26.66, 26.66, 10, 10]],
               'Goblet':[goblet_stats,[19.175, 19.175, 19.150, 5, 5, 5, 5, 5, 5, 5, 5, 2.5]],
               'Circlet':[circlet_stats,[22, 22, 22, 10, 10, 10, 4]]}
@@ -30,21 +30,21 @@ flatrates = [15.79, 15.79, 10.53, 10.53, 10.53, 10.53, 10.53, 7.89, 7.89]
 pctrates = [15, 15, 15, 10, 10, 10, 10, 7.5, 7.5]
 elementalrates = [13.64, 13.64, 13.64, 9.09, 9.09, 9.09, 9.09, 9.09, 6.82, 6.82]
 critrates = [14.63, 14.63, 14.63, 9.76, 9.76, 9.76, 9.76, 9.76, 7.32]
-substats = ['hp', 'atk', 'def', 'hp%', 'atk%', 'def%', 'er%', 'em', 'cr%', 'cd%']
-sstat_dict = {'hp': [substats.copy(), flatrates],
-              'atk': [substats.copy(), flatrates],
-              'hp%': [substats.copy(), pctrates],
-              'atk%': [substats.copy(), pctrates],
-              'def%': [substats.copy(), pctrates],
-              'er%': [substats.copy(), pctrates],
-              'em': [substats.copy(), pctrates],
-              'cr%': [substats.copy(), critrates],
-              'cd%': [substats.copy(), critrates],}
+substats = ['HP', 'ATK', 'DEF', 'HP%', 'ATK%', 'DEF%', 'Energy Recharge%', 'Elemental Mastery', 'CRIT Rate%', 'CRIT DMG%']
+sstat_dict = {'HP': [substats.copy(), flatrates],
+              'ATK': [substats.copy(), flatrates],
+              'HP%': [substats.copy(), pctrates],
+              'ATK%': [substats.copy(), pctrates],
+              'DEF%': [substats.copy(), pctrates],
+              'Energy Recharge%': [substats.copy(), pctrates],
+              'Elemental Mastery': [substats.copy(), pctrates],
+              'CRIT Rate%': [substats.copy(), critrates],
+              'CRIT DMG%': [substats.copy(), critrates],}
 
-for key in ['hp', 'atk', 'hp%', 'atk%', 'def%', 'er%', 'em', 'cr%', 'cd%']:
+for key in ['HP', 'ATK', 'HP%', 'ATK%', 'DEF%', 'Energy Recharge%', 'Elemental Mastery', 'CRIT Rate%', 'CRIT DMG%']:
   sstat_dict[key][0].remove(key)
 
-for elemental in ['pyro%', 'electro%', 'cryo%', 'hydro%', 'dendro%', 'anemo%', 'geo%', 'physical%', 'healing%']:
+for elemental in ['Pyro DMG%', 'Electro DMG%', 'Cryo DMG%', 'Hydro DMG%', 'Dendro DMG%', 'Anemo DMG%', 'Geo DMG%', 'Physical DMG%', 'Healing%']:
   sstat_dict[elemental] = [substats.copy(), elementalrates]
 
 
