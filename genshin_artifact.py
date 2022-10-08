@@ -184,3 +184,4 @@ if st.sidebar.button('Run simulation!'):
     plt.xlim(0, iterations)
     plt.ylim(0, max(attempts))
     plt.fill_between(range(iterations), attempts)
+    st.pyplot(fig)
