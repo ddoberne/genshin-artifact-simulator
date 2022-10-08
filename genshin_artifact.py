@@ -193,26 +193,27 @@ class Domain:
     for j in range(n):
       for i in range(fives):
         a = Artifact(stars = 5, aset = random.choice(self.sets[:2]))
-        if self.check_match(a, verbose):
-          match_found = True
+        for f in self.filters:
+          if a.pass_filter(f):
+            match_found = True
         self.output[5].append(a)
         self.exp += 3780
       for i in range(fours):
         a = Artifact(stars = 4, aset = random.choice(self.sets))
-        if self.check_match(a, verbose):
-          match_found = True
+        for f in self.filters:
+          if a.pass_filter(f):
+            match_found = True
         self.output[4].append(a)
         self.exp += 2520
       for i in range(threes):
         a = Artifact(stars = 3, aset = random.choice(self.sets[2:]))
-        if self.check_match(a, verbose):
-          match_found = True
+        for f in self.filters:
+          if a.pass_filter(f):
+            match_found = True
         self.output[3].append(a)
         self.exp += 1260
-      
     return match_found
-def lowercase(s):
-  return s.lower()
+  
 
 if 'filters' not in st.session_state:
   st.session_state.filters = []
