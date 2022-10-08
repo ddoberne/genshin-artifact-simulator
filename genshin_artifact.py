@@ -153,41 +153,40 @@ class Domain:
   def remove_filter(self):
     self.filters.pop()
   
-  def create_match(self,  stars = [], asets = [], pieces = [], mstats = [], sstats = []):
-    self.match = {'stars': stars,
-                  'asets': asets,
-                  'pieces': pieces,
-                  'mstats': mstats,
-                  'sstats': sstats}
+  def set_filter_flags(self):
+    self.flags = {1:[],
+                  0:self.filters.copy()}
   
-  def check_match(self, a, verbose = False):
-    for f in self.filters:
-      pass
-    if len(self.match['stars']) > 0 and a.stars not in self.match['stars']:
-      return False
-    if len(self.match['asets']) > 0 and a.aset not in self.match['asets']:
-      return False
-    if len(self.match['pieces']) > 0 and a.piece not in self.match['pieces']:
-      return False
-    if len(self.match['mstats']) > 0 and a.mstat not in self.match['mstats']:
-      return False
-    if len(self.match['sstats']) > 0:
-      checklist = self.match['sstats'].copy()
-      for stat in a.sstat:
-        if stat in checklist:
-          checklist.remove(stat)
-      if len(checklist) > 0:
-        return False
-    if verbose:
-      st.write(f'{a.stars}* {a.aset} {a.piece}')
-      st.write(f'Main stat: {a.mstat}')
-      st.write(f'Substats: {a.sstat}')
-    return True
-
-      
-
-    
-
+  def all_filters_satisfied(self):
+    return len(self.flags[0]) == 0
+  
+  def run_until_all_pieces_found(self):
+    self.set_filter_flags()
+    n = 0
+    while !self.all_filters_satisfied and n < 1000:
+      n += 1
+      fives = random.choices(population = [1,2], weights = [93, 7], k = 1)[0]
+      fours = random.choices(population = [2,3], weights = [52, 48], k = 1)[0]
+      threes = random.choices(population = [3,4], weights = [45, 55], k = 1)[0]
+      for i in range(fives):
+        a = Artifact(stars = 5, aset = random.choice(self.sets[:2]))
+        for f in self.flags[0]:
+          if a.pass_filter(f):
+            self.flags[0].remove(f)
+      for i in range(fours):
+        a = Artifact(stars = 4, aset = random.choice(self.sets))
+        for f in self.flags[0]:
+          if a.pass_filter(f):
+            self.flags[0].remove(f)
+      for i in range(threes):
+        a = Artifact(stars = 3, aset = random.choice(self.sets[2:]))
+        for f in self.flags[0]:
+          if a.pass_filter(f):
+            self.flags[0].remove(f)
+    return n
+            
+        
+  
 
   def run(self, n = 1, verbose = False):
     fives = random.choices(population = [1,2], weights = [93, 7], k = 1)[0]
@@ -331,14 +330,20 @@ if st.sidebar.button('Run simulation!') and len(st.session_state.filters) > 0:
         d = Domain(domain_dict[user_domain])
         for f in st.session_state.filters:
           d.add_filter(f)
-        run_count = 0
-        while run_count < 1000:
+        if mode == 'Find ONE':
+          run_count = 0
+          while run_count < 1000:
             run_count += 1
             if d.run(verbose = verbose):
                 break
             if condensed and d.run(verbose = verbose):
                 break
-        attempts.append(run_count)
+          attempts.append(run_count)
+        elif mode == 'Find ALL':
+          run_count = d.run_until_all_pieces_found()
+          if condensed:
+            run_count = (run_count + 1) // 2
+          attempts.append(run_count)
     attempts.sort()
     st.write(f'Mean (average) number of runs: {sum(attempts)/iterations}')
     st.write(f'Median number of runs: {(attempts[iterations//2] + attempts[(iterations - 1)//2])/2}')
