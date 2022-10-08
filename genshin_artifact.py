@@ -163,7 +163,7 @@ class Domain:
   def run_until_all_pieces_found(self):
     self.set_filter_flags()
     n = 0
-    while ~(self.all_filters_satisfied() and n < 1000):
+    while (not self.all_filters_satisfied()) and n < 1000:
       n += 1
       fives = random.choices(population = [1,2], weights = [93, 7], k = 1)[0]
       fours = random.choices(population = [2,3], weights = [52, 48], k = 1)[0]
