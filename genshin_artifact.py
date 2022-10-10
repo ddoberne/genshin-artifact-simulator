@@ -288,7 +288,7 @@ else:
 iterations = 100
 attempts = []
 if st.sidebar.button('Run simulation!') and len(st.session_state.filters) > 0:
-  fig = plt.figure(figsize = (12,6))
+  st.session_state.fig = plt.figure(figsize = (12,6))
   sns.set_theme('notebook')
   if mode == 'Run n times':
     d = Domain(domain_dict[user_domain])
@@ -309,8 +309,8 @@ if st.sidebar.button('Run simulation!') and len(st.session_state.filters) > 0:
       d.run(n = user_runs * (1 + condensed))
       successes.append(len(d.get_filtered_artifacts()))
     successes.sort()
-    st.write(f'Mean (average) number of relevant artifacts found: {sum(successes)/iterations}')
-    st.write(f'Median number of relevant artifacts found: {(successes[iterations//2] + successes[(iterations - 1)//2])/2}')
+    st.session_state.result = f'Mean (average) number of relevant artifacts found: {sum(successes)/iterations}\n'
+    st.session_state.result += f'Median number of relevant artifacts found: {(successes[iterations//2] + successes[(iterations - 1)//2])/2}'
     plt.plot(range(1, iterations + 1), successes)
     plt.title('Simulation distribution')
     plt.ylabel('Number of artifacts')
@@ -318,7 +318,6 @@ if st.sidebar.button('Run simulation!') and len(st.session_state.filters) > 0:
     plt.xlim(1, iterations)
     plt.ylim(0, max(successes))
     plt.fill_between(range(1, iterations + 1), successes)
-    st.pyplot(fig)
     
             
     
@@ -345,8 +344,8 @@ if st.sidebar.button('Run simulation!') and len(st.session_state.filters) > 0:
             run_count = (run_count + 1) // 2
           attempts.append(run_count)
     attempts.sort()
-    st.write(f'Mean (average) number of runs: {sum(attempts)/iterations}')
-    st.write(f'Median number of runs: {(attempts[iterations//2] + attempts[(iterations - 1)//2])/2}')
+    st.session_state.result = f'Mean (average) number of runs: {sum(attempts)/iterations}\n'
+    st.session_state.result += f'Median number of runs: {(attempts[iterations//2] + attempts[(iterations - 1)//2])/2}'
     
     
     
@@ -357,4 +356,11 @@ if st.sidebar.button('Run simulation!') and len(st.session_state.filters) > 0:
     plt.xlim(1, iterations)
     plt.ylim(0, max(attempts))
     plt.fill_between(range(1, iterations + 1), attempts)
-    st.pyplot(fig)
+
+if 'result' in st.session_state:
+  st.write(st.session_state.result)
+
+if 'fig' in st.session_state:
+  st.pyplot(fig)
+    
+    
