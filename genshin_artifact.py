@@ -285,6 +285,14 @@ else:
     output += f.__str__() + '\n'
   st.text(output[:-1])
   
+
+if 'result' in st.session_state:
+  st.write(st.session_state.result)
+
+if 'fig' in st.session_state:
+  st.pyplot(st.session_state.fig)
+    
+  
 iterations = 100
 attempts = []
 if st.sidebar.button('Run simulation!') and len(st.session_state.filters) > 0:
@@ -357,10 +365,4 @@ if st.sidebar.button('Run simulation!') and len(st.session_state.filters) > 0:
     plt.ylim(0, max(attempts))
     plt.fill_between(range(1, iterations + 1), attempts)
 
-if 'result' in st.session_state:
-  st.write(st.session_state.result)
-
-if 'fig' in st.session_state:
-  st.pyplot(st.session_state.fig)
-    
     
