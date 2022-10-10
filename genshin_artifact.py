@@ -221,6 +221,13 @@ class Domain:
 if 'filters' not in st.session_state:
   st.session_state.filters = []
 st.title('Genshin Artifact Simulator')
+
+if 'fig' in st.session_state:
+  st.pyplot(st.session_state.fig)
+
+if 'result' in st.session_state:
+  st.write(st.session_state.result)
+  
 condensed = st.sidebar.checkbox(label = 'Use Condensed Resin', value = False)
 #verbose = st.sidebar.checkbox(label = 'Print results', value = False)
 verbose = False
@@ -286,11 +293,6 @@ else:
   st.text(output[:-1])
   
 
-if 'result' in st.session_state:
-  st.write(st.session_state.result)
-
-if 'fig' in st.session_state:
-  st.pyplot(st.session_state.fig)
     
   
 iterations = 100
@@ -317,7 +319,7 @@ if st.sidebar.button('Run simulation!') and len(st.session_state.filters) > 0:
       d.run(n = user_runs * (1 + condensed))
       successes.append(len(d.get_filtered_artifacts()))
     successes.sort()
-    st.session_state.result = f'Mean (average) number of relevant artifacts found: {sum(successes)/iterations}\n'
+    st.session_state.result = f'Mean (average) number of relevant artifacts found: {sum(successes)/iterations} | '
     st.session_state.result += f'Median number of relevant artifacts found: {(successes[iterations//2] + successes[(iterations - 1)//2])/2}'
     plt.plot(range(1, iterations + 1), successes)
     plt.title('Simulation distribution')
@@ -352,7 +354,7 @@ if st.sidebar.button('Run simulation!') and len(st.session_state.filters) > 0:
             run_count = (run_count + 1) // 2
           attempts.append(run_count)
     attempts.sort()
-    st.session_state.result = f'Mean (average) number of runs: {sum(attempts)/iterations}\n'
+    st.session_state.result = f'Mean (average) number of runs: {sum(attempts)/iterations} | '
     st.session_state.result += f'Median number of runs: {(attempts[iterations//2] + attempts[(iterations - 1)//2])/2}'
     
     
