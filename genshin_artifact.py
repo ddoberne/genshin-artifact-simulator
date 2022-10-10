@@ -361,6 +361,6 @@ if 'result' in st.session_state:
   st.write(st.session_state.result)
 
 if 'fig' in st.session_state:
-  st.pyplot(fig)
+  st.pyplot(st.session_state.fig)
     
     
